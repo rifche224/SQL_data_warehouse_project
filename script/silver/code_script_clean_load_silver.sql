@@ -172,7 +172,7 @@ BEGIN
     PRINT '>> Durée de chargement sur la couche Silver :' + CAST(DATEDIFF(second, @start_time, @end_time) AS NVARCHAR) + ' seconds';
     SET @end_batch_time = GETDATE();
     PRINT '=====================================================================';
-    PRINT 'Le chargement complet des données brutes est terminé';
+    PRINT 'Le chargement complet des données nettoyées est terminé';
     PRINT '>> Temps de chargement total est :' + CAST(DATEDIFF(second, @start_batch_time, @end_batch_time) AS NVARCHAR) + ' seconds';
     PRINT '=====================================================================';
     END TRY
