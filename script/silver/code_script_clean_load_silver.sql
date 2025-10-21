@@ -1,24 +1,9 @@
---******************************************************************************************
---* Nom du fichier  : code_script_clean_load_silver.sql
---* Auteur          : Cherif
---* Objectif        : Chargement des données nettoyées dans la couche SILVER 
---* Description     :
---* Ce fichier charge les données nettoyées dans la table silver.crm_cust_info.
---*                   et les données nettoyées dans la table silver.crm_prd_info.
---*                   et les données nettoyées dans la table silver.crm_sales_details.
---*                   et les données nettoyées dans la table silver.erp_cust_az12.
---*                   et les données nettoyées dans la table silver.erp_loc_a101.
---*                   et les données nettoyées dans la table silver.erp_cat_g1v2.
---******************************************************************************************
-PRINT '==================================================================';
-PRINT 'NETTOYAGE ET CHARGEMENT DES DONNÉES CRM & ERP sur la couche SILVER';
-PRINT '==================================================================';
 CREATE OR ALTER PROCEDURE silver.load_silver AS
 BEGIN
     DECLARE @start_time DATETIME, @end_time DATETIME, @start_batch_time DATETIME, @end_batch_time DATETIME;
     SET @start_batch_time = GETDATE();
     BEGIN TRY
-    PRINT '>> Vidange des tables : silver.crm_cust_info';
+    PRINT '>> Vidange de la table : silver.crm_cust_info';
     TRUNCATE TABLE silver.crm_cust_info;
     SET @start_time = GETDATE();
     PRINT '>> Chargement des données : silver.crm_cust_info';
@@ -51,7 +36,9 @@ BEGIN
     SET @end_time = GETDATE();
     -- Chargement des données nettoyées dans la table silver.crm_prd_info
     TRUNCATE TABLE silver.crm_prd_info;
+    PRINT '>> Vidange de la table : silver.crm_prd_info';
     SET @start_time = GETDATE();
+    PRINT '>> Chargement des données : silver.crm_prd_info';
     INSERT INTO silver.crm_prd_info(
         prd_id,
         cat_id,
@@ -81,7 +68,9 @@ BEGIN
     SET @end_time = GETDATE();
     -- Chargement des données nettoyées dans la table silver.crm_sales_details
     TRUNCATE TABLE silver.crm_sales_details;
+    PRINT '>> Vidange de la table : silver.crm_sales_details';
     SET @start_time = GETDATE();
+    PRINT '>> Chargement des données : silver.crm_sales_details';
     INSERT INTO silver.crm_sales_details(
         sls_ord_num,
         sls_prd_key,
@@ -120,7 +109,9 @@ BEGIN
     SET @end_time = GETDATE();
     -- Chargement des données nettoyées dans la table silver.ERP_cust_az12
     TRUNCATE TABLE silver.erp_cust_az12;
+    PRINT '>> Vidange de la table : silver.erp_cust_az12';
     SET @start_time = GETDATE();
+    PRINT '>> Chargement des données : silver.erp_cust_az12';
     INSERT INTO silver.erp_cust_az12(
         cid,
         bdate,
@@ -144,7 +135,9 @@ BEGIN
     SET @end_time = GETDATE();
     -- Chargement des données nettoyées dans la table silver.ERP_loc_a101
     TRUNCATE TABLE silver.erp_loc_a101;
+    PRINT '>> Vidange de la table : silver.erp_loc_a101';
     SET @start_time = GETDATE();
+    PRINT '>> Chargement des données : silver.erp_loc_a101';
     INSERT INTO silver.erp_loc_a101(
         cid,
         cntry
@@ -160,7 +153,9 @@ BEGIN
     SET @end_time =GETDATE();
     -- Chargement des données nettoyées dans la table silver.erp_px_cat_g1v2
     TRUNCATE TABLE silver.erp_cat_g1v2;
+    PRINT '>> Vidange de la table : silver.erp_cat_g1v2';
     SET @start_time = GETDATE();
+    PRINT '>> Chargement des données : silver.erp_cat_g1v2';
     INSERT INTO silver.erp_cat_g1v2(
         id,
         cat,
