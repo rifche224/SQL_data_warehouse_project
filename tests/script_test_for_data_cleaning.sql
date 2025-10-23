@@ -275,14 +275,18 @@ PRINT '==================================================';
 
 -- 5.1 Nettoyage des identifiants et standardisation des pays
 PRINT '>> 5.1 - Nettoyage et standardisation des pays';
-SELECT
-  REPLACE(cid, '-', '') AS cid,
-  CASE
-    WHEN REPLACE(REPLACE(REPLACE(cntry, CHAR(9), ''), CHAR(10), ''), CHAR(13), '') = 'DE' THEN 'Germany'
-    WHEN REPLACE(REPLACE(REPLACE(cntry, CHAR(9), ''), CHAR(10), ''), CHAR(13), '') IN ('US', 'USA') THEN 'United States'
-    WHEN TRIM(cntry) = '' OR cntry IS NULL THEN 'n/a'
-    ELSE TRIM(cntry)
-  END AS cntry
+SSELECT DISTINCT 
+    cntry AS original,
+    '[' + LTRIM(RTRIM(REPLACE(REPLACE(REPLACE(REPLACE(cntry, CHAR(9), ''), CHAR(10), ''), CHAR(13), ''), CHAR(160), ''))) + ']' AS cleaned,
+    CASE
+        WHEN REPLACE(REPLACE(REPLACE(REPLACE(cntry, CHAR(9), ''), CHAR(10), ''), CHAR(13), ''), CHAR(160), '') = 'DE'
+            THEN 'Germany'
+        WHEN REPLACE(REPLACE(REPLACE(REPLACE(cntry, CHAR(9), ''), CHAR(10), ''), CHAR(13), ''), CHAR(160), '') IN ('US', 'USA')
+            THEN 'United States'
+        WHEN cntry IS NULL OR LTRIM(RTRIM(REPLACE(cntry, CHAR(160), ''))) = ''
+            THEN 'n/a'
+        ELSE LTRIM(RTRIM(REPLACE(cntry, CHAR(160), '')))
+    END AS cntry_clean
 FROM bronze.erp_loc_a101;
 
 -- ============================================================================
